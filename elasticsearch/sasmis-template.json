@@ -1,0 +1,213 @@
+{
+  "template": "simsas*",
+  "mappings": {
+    "incident": {
+      "properties": {
+        "@timestamp": {
+          "type": "date",
+          "format": "date_optional_time"
+        },
+        "date": {
+          "type": "date",
+          "format": "dd/MM/YYYY"
+        },
+        "@version": {
+          "type": "integer"
+        },
+        "adm0_code": {
+          "type": "integer"
+        },
+        "adm1_code": {
+          "type": "integer"
+        },
+        "adm2_code": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "inc_type": {
+          "type": "integer"
+        },
+        "inc_type_category_id": {
+          "type": "integer"
+        },
+        "pgr_disr_days": {
+          "type": "integer"
+        },
+        "security_level": {
+          "type": "integer"
+        },
+        "threat_type": {
+          "type": "integer"
+        },
+        "assets_count": {
+          "type": "integer"
+        },
+        "notifications_count": {
+          "type": "integer"
+        },
+        "victims_count": {
+          "type": "integer"
+        },
+        "adm0_name": {
+          "type": "keyword"
+        },
+        "adm1_name": {
+          "type": "keyword"
+        },
+        "adm2_name": {
+          "type": "keyword"
+        },
+        "duty_station": {
+          "type": "keyword"
+        },
+        "focal_point": {
+          "type": "keyword"
+        },
+        "security_level_name": {
+          "type": "keyword"
+        },
+        "threat_type_name": {
+          "type": "keyword"
+        },
+        "timespan_name": {
+          "type": "keyword"
+        },
+        "inc_type_category_name": {
+          "type": "keyword"
+        },
+        "inc_type_name": {
+          "type": "keyword"
+        },
+        "position": {
+          "type": "keyword"
+        },
+        "press_interest_name": {
+          "type": "keyword"
+        },
+        "release_authority": {
+          "type": "keyword"
+        },
+        "has_civil_victims": {
+          "type": "boolean"
+        },
+        "has_contractor_victims": {
+          "type": "boolean"
+        },
+        "has_dependents_victims": {
+          "type": "boolean"
+        },
+        "has_other_victims": {
+          "type": "boolean"
+        },
+        "has_partner_victims": {
+          "type": "boolean"
+        },
+        "has_pics": {
+          "type": "boolean"
+        },
+        "has_un_victims": {
+          "type": "boolean"
+        },
+        "has_wfp_victims": {
+          "type": "boolean"
+        },
+        "is_draft": {
+          "type": "boolean"
+        },
+        "is_kin_notified": {
+          "type": "boolean"
+        },
+        "is_released": {
+          "type": "boolean"
+        },
+        "is_root": {
+          "type": "boolean"
+        },
+        "is_violent_act": {
+          "type": "boolean"
+        },
+        "is_work_related": {
+          "type": "boolean"
+        },
+        "pgr_disruption": {
+          "type": "boolean"
+        },
+        "context": {
+          "type": "text"
+        },
+        "description": {
+          "type": "text"
+        },
+        "file_no": {
+          "type": "text"
+        },
+        "future_action": {
+          "type": "text"
+        },
+        "kin_remarks": {
+          "type": "text"
+        },
+        "location_description": {
+          "type": "text"
+        },
+        "map_radius": {
+          "type": "double"
+        },
+        "latitude": {
+          "type": "double"
+        },
+        "longitude": {
+          "type": "double"
+        },
+        "location": {
+          "type": "geo_point"
+        },
+        "assets": {
+          "type": "object",
+          "properties": {
+            "asset_impact_type": {
+              "type": "keyword"
+            },
+            "asset_type_description": {
+              "type": "keyword"
+            },
+            "asset_type": {
+              "type": "integer"
+            },
+            "description": {
+              "type": "text"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "value": {
+              "type": "integer"
+            },
+            "value_name": {
+              "type": "keyword"
+            }
+          }
+        },
+        "perpetrator": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "text"
+            },
+            "group_name": {
+              "type": "keyword"
+            },
+            "category_name": {
+              "type": "keyword"
+            },
+            "name": {
+              "type": "text"
+            }
+          }
+        }
+      }
+    }
+  }
+}
