@@ -1,0 +1,4 @@
+enviroment_variables.sh
+*.pyc
+*.zip
+*.csv
