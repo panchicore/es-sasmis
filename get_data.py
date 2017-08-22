@@ -54,7 +54,7 @@ if __name__ == "__main__":
         pass
 
     today = datetime.date.today()
-    back_in = today - datetime.timedelta(days=1)
+    back_in = today - datetime.timedelta(days=365*10)
     get(back_in.isoformat(), today.isoformat())
 
 
