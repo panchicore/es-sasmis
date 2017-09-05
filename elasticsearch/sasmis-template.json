@@ -267,9 +267,6 @@
               "type": "keyword"
             }
           }
-        },
-        "categories": {
-          "type": "array"
         }
       }
     }
