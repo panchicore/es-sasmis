@@ -3,8 +3,6 @@ import requests
 import datetime
 import sys
 
-BASE_PATH = os.path.dirname(os.path.abspath(__file__))
-DOWNLOAD_PATH = os.path.join(BASE_PATH, "data")
 SASMIS_UPLOAD_METHOD = os.environ.get("SASMIS_UPLOAD_METHOD", "requests")
 
 def get(_date_from, _date_to, updated_since=None):
@@ -21,10 +19,6 @@ def get(_date_from, _date_to, updated_since=None):
     print res.url
     print res.json()
 
-    return
-
-    dump = ""
-
     for i in res.json():
         url = os.environ.get("SOURCE_URL") + "sirs/sir/get"
 
@@ -36,7 +30,7 @@ def get(_date_from, _date_to, updated_since=None):
         print incident.url
 
         if incident.ok:
-            dump += "{}\n".format(incident.content)
+            pass
         else:
             print "[ERROR] {}".format(params)
 
@@ -46,13 +40,9 @@ def get(_date_from, _date_to, updated_since=None):
             print incident.url
 
             if incident.ok:
-                dump += "{}\n".format(incident.content)
+                pass
             else:
                 print "[ERROR] {}".format(params)
-
-    f = open(os.path.join(DOWNLOAD_PATH, "data.json"), 'w')
-    f.write(dump)
-    f.close()
 
 
 if __name__ == "__main__":
