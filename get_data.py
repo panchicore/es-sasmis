@@ -5,15 +5,23 @@ import sys
 
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 DOWNLOAD_PATH = os.path.join(BASE_PATH, "data")
+SASMIS_UPLOAD_METHOD = os.environ.get("SASMIS_UPLOAD_METHOD", "requests")
 
-def get(_date_from, _date_to):
+def get(_date_from, _date_to, updated_since=None):
     params = {
-        "date_a": _date_from,
-        "date_b": _date_to,
+        "date_a": _date_from or "",
+        "date_b": _date_to or "",
+        "updated_since": "0"
     }
+
+    if updated_since:
+        params["updated_since"] = updated_since
+
     res = requests.get(os.environ.get("SOURCE_URL") + "sirs/list/export", params=params)
     print res.url
     print res.json()
+
+    return
 
     dump = ""
 
@@ -48,14 +56,16 @@ def get(_date_from, _date_to):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        # _from_date = datetime.datetime.strptime(sys.argv[1], "%Y-%m-%d")
-        # _to_date = datetime.datetime.strptime(sys.argv[2], "%Y-%m-%d")
-        pass
 
-    today = datetime.date.today()
-    back_in = today - datetime.timedelta(days=365*10)
-    get(back_in.isoformat(), today.isoformat())
+    if len(sys.argv) == 2:
+
+        today = datetime.date.today()
+        back_in = today - datetime.timedelta(days=1)
+        get(None, None, back_in)
+    elif len(sys.argv) == 3:
+        _from_date = datetime.datetime.strptime(sys.argv[1], "%Y-%m-%d").isoformat()
+        _to_date = datetime.datetime.strptime(sys.argv[2], "%Y-%m-%d").isoformat()
+        get(_from_date, _to_date)
 
 
 

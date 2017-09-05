@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 export SASMIS_FILE_PATH='/data/es-gdelt/data/realtime/*.CSV'
+export SASMIS_UPLOAD_METHOD='requests'
 export ES_HOST=http://localhost:9200/
 export ES_USER=elastic
 export ES_PASSWORD=changeme
