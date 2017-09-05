@@ -3,7 +3,20 @@ import requests
 import datetime
 import sys
 
-SASMIS_UPLOAD_METHOD = os.environ.get("SASMIS_UPLOAD_METHOD", "requests")
+
+def hydrate(incident):
+    incident["@timestamp"] = incident["incident_date_complete"]
+    incident["location"] = {"lat": incident["latitude"], "lon": incident["longitude"]}
+    return incident
+
+def index(incident):
+    index_url = os.environ['ES_SASMIS_HOST'] + os.environ['ES_SASMIS_INDEX'] + "/incident/" + str(incident["id"])
+    print index_url
+    res = requests.post(index_url, json=hydrate(incident))
+    if not res.ok:
+        print incident
+        print res, res.content
+        print '------'
 
 def get(_date_from, _date_to, updated_since=None):
     params = {
@@ -17,7 +30,10 @@ def get(_date_from, _date_to, updated_since=None):
 
     res = requests.get(os.environ.get("SOURCE_URL") + "sirs/list/export", params=params)
     print res.url
-    print res.json()
+    print res
+    # print res.content
+
+    print "> {0} incidents".format(len(res.json()))
 
     for i in res.json():
         url = os.environ.get("SOURCE_URL") + "sirs/sir/get"
@@ -30,7 +46,7 @@ def get(_date_from, _date_to, updated_since=None):
         print incident.url
 
         if incident.ok:
-            pass
+            index(incident.json())
         else:
             print "[ERROR] {}".format(params)
 
@@ -40,7 +56,7 @@ def get(_date_from, _date_to, updated_since=None):
             print incident.url
 
             if incident.ok:
-                pass
+                index(incident.json())
             else:
                 print "[ERROR] {}".format(params)
 
@@ -50,11 +66,11 @@ if __name__ == "__main__":
     if len(sys.argv) == 2:
 
         today = datetime.date.today()
-        back_in = today - datetime.timedelta(days=1)
+        back_in = today - datetime.timedelta(days=10)
         get(None, None, back_in)
     elif len(sys.argv) == 3:
-        _from_date = datetime.datetime.strptime(sys.argv[1], "%Y-%m-%d").isoformat()
-        _to_date = datetime.datetime.strptime(sys.argv[2], "%Y-%m-%d").isoformat()
+        _from_date = datetime.datetime.strptime(sys.argv[1], "%Y-%m-%d").date().isoformat()
+        _to_date = datetime.datetime.strptime(sys.argv[2], "%Y-%m-%d").date().isoformat()
         get(_from_date, _to_date)
 
 
