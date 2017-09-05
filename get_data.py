@@ -28,7 +28,7 @@ def get(_date_from, _date_to, updated_since=None):
     if updated_since:
         params["updated_since"] = updated_since
 
-    res = requests.get(os.environ.get("SOURCE_URL") + "sirs/list/export", params=params)
+    res = requests.get(os.environ.get("SASMIS_SOURCE_URL") + "sirs/list/export", params=params)
     print res.url
     print res
     # print res.content
@@ -36,7 +36,7 @@ def get(_date_from, _date_to, updated_since=None):
     print "> {0} incidents".format(len(res.json()))
 
     for i in res.json():
-        url = os.environ.get("SOURCE_URL") + "sirs/sir/get"
+        url = os.environ.get("SASMIS_SOURCE_URL") + "sirs/sir/get"
 
         params = {
             "id": i["id"],
