@@ -66,7 +66,7 @@ if __name__ == "__main__":
     if len(sys.argv) == 2:
 
         today = datetime.date.today()
-        back_in = today - datetime.timedelta(days=10)
+        back_in = today - datetime.timedelta(days=1)
         get(None, None, back_in)
     elif len(sys.argv) == 3:
         _from_date = datetime.datetime.strptime(sys.argv[1], "%Y-%m-%d").date().isoformat()
