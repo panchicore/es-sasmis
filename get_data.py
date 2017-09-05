@@ -21,8 +21,6 @@ def get(_date_from, _date_to, updated_since=None):
     print res.url
     print res.json()
 
-    return
-
     dump = ""
 
     for i in res.json():
