@@ -3,3 +3,4 @@ enviroment_variables.sh
 *.zip
 *.csv
 data
+*.idea

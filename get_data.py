@@ -9,6 +9,7 @@ def hydrate(incident):
     incident["location"] = {"lat": incident["latitude"], "lon": incident["longitude"]}
     return incident
 
+
 def index(incident):
     index_url = os.environ['ES_SASMIS_HOST'] + os.environ['ES_SASMIS_INDEX'] + "/incident/" + str(incident["id"])
     print index_url
@@ -17,6 +18,38 @@ def index(incident):
         print incident
         print res, res.content
         print '------'
+
+    for person in incident.get("victims"):
+        print 'UPDATING VICTIM FOR', incident.get("file_no")
+        index_url = os.environ['ES_SASMIS_HOST'] + os.environ['ES_SASMIS_PERSONNEL_INDEX'] + "/doc/" + str(
+            person["id"])
+        print index_url
+
+        person['tags'] = []
+
+        # add dead
+        if person.get("health_status_name").count("Deceased") > 0 or person.get("status_name").count("Deceased") > 0:
+            person['tags'].append("Deceased")
+
+        if person.get("contract_name") == "Contractor":
+            person['tags'].append("WFP Contractor")
+        elif person.get("contract_name") == "Dependent":
+            person['tags'].append("WFP Dependent")
+        elif person.get("contract_name") in ["Cooperating Partner", "Stand-by Partner"]:
+            person['tags'].append("WFP Partner")
+        else:
+            person['tags'].append("WFP Personnel")
+
+        incident['person'] = person
+
+        print incident['person']
+
+        res = requests.post(index_url, json=hydrate(incident))
+        if not res.ok:
+            print incident
+            print res, res.content
+            print '------'
+
 
 def get(_date_from, _date_to, updated_since=None):
     params = {
